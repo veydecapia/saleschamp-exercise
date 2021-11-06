@@ -28,7 +28,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
     framework: 'jasmine2', //Type of Framework used 
     directConnect:true, 
-    specs: ['./specs/home.spec.ts'], //Name of the Specfile
+    specs: ['./specs/careers.spec.ts'], //Name of the Specfile
     multiCapabilities: [{
         browserName: 'chrome',   
         shardTestFiles: true, // Allows different specs to run in parallel
