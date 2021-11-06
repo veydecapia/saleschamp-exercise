@@ -21,6 +21,10 @@ describe('Home Page - Elements', () => {
             expect(await page.headerLogo().isDisplayed()).toBe(true);
         });
 
+        it('Should display correct Hero Title', async () => {
+            expect(await page.heroTitle().getText()).toBe("Communicate like a champion");
+        });
+
         it('Should display Navigation Items', async () => {
             expect(await page.headerLogo().isDisplayed()).toBe(true);
             expect(await page.careersLink().isDisplayed()).toBe(true);
