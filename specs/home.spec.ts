@@ -21,5 +21,11 @@ describe('Home Page - Elements', () => {
             expect(await page.headerLogo().isDisplayed()).toBe(true);
         });
 
+        it('Should display Navigation Items', async () => {
+            expect(await page.headerLogo().isDisplayed()).toBe(true);
+            expect(await page.careersLink().isDisplayed()).toBe(true);
+            expect(await page.pricingLink().isDisplayed()).toBe(true);
+            expect(await page.contactUsLink().isDisplayed()).toBe(true);
+        });
     });
 });
