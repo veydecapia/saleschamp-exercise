@@ -1,7 +1,6 @@
 import { browser, element, by } from "protractor";
-import { protractor } from "protractor/built/ptor";
 import { BasePage } from "./base.page";
-const env = require('../shared/constants/environmentProperties.json');
+import * as env from '../shared/constants/environmentProperties.json';
 
 
 
