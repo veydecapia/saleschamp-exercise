@@ -1,5 +1,6 @@
 import { HomePage } from "../page-objects/home.page";
 import { browser } from "protractor";
+import * as pageData from "../test-data/pageData.json";
 
 
 
@@ -14,7 +15,7 @@ describe('Home Page - Elements', () => {
 
     describe('Home Page - Elements', () => {
         it('Should have the correct page title', async () => {
-            expect(await browser.getTitle()).toEqual('SalesChamp - Communicate like a champion')
+            expect(await browser.getTitle()).toEqual(pageData.homePage.pageTitle);
         });
 
         it('Should display SalesChamp Header Navigation Logo', async () => {
@@ -22,7 +23,7 @@ describe('Home Page - Elements', () => {
         });
 
         it('Should display correct Hero Title', async () => {
-            expect(await page.heroTitle().getText()).toBe("Communicate like a champion");
+            expect(await page.heroTitle().getText()).toBe(pageData.homePage.heroTitle);
         });
 
         it('Should display Navigation Items', async () => {
