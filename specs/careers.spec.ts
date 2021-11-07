@@ -43,6 +43,7 @@ describe('See open positions in Sales Champ', () => {
 
         it('Should display correct Hero paragraph', async () => {
             expect((await careeersPage.heroParagraph().getText()).trim())
+                    //TODO: Add as a json file.
                     .toBe("We're rapidly growing here at SalesChamp. We're hiring now and will continue to do so throughout 2021. We’re looking for passionate people to join our young, friendly team. ".trim());
         });
 
@@ -76,11 +77,13 @@ describe('See open positions in Sales Champ', () => {
         });
 
         // DATA DRIVEN TESTS
+
+        //TODO: Add describe for better report generation
         roleData.forEach((item , index) => {
             it('Should display correct Role Name: ' + item.roleName, async () => {
                 //Act
                 const element = careeersPage.roleName(index);
-                await scrollToElement(element);
+                await scrollToElement(element); //TODO: Add wait for scroll
     
                 //Assert
                 expect((await element.getText()).trim()).toBe(item.roleName.trim());
