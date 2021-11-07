@@ -2,9 +2,9 @@ import { CareersPage } from "../page-objects/careers.page";
 import { HomePage } from "../page-objects/home.page";
 import { browser } from "protractor";
 import { getElementAttributeValue, scrollToElement, waitElementToBeClickable } from "../shared/utils";
+import { protractor } from "protractor/built/ptor";
 import * as roleData from '../test-data/roleData.json';
 import * as applyRoleData from '../test-data/applyRoleData.json';
-import { protractor } from "protractor/built/ptor";
 import * as pageData from "../test-data/pageData.json";
 
 
@@ -103,7 +103,7 @@ describe('See open positions in Sales Champ and Apply', () => {
             describe("Get details for the role: " + item.roleName, () => {
                 it('Should display correct Role Name: ' + item.roleName, async () => {
                     //Act
-                    const element = careeersPage.roleName(index);
+                    const element = careeersPage.roleNameLbl(index);
                     await scrollToElement(element); //TODO: Add wait for scroll instead of sleep
                     browser.sleep(100);
         
@@ -113,13 +113,13 @@ describe('See open positions in Sales Champ and Apply', () => {
                 
                 
                 it('Should display correct Role Description: '  + item.roleName, async () => {
-                    expect((await careeersPage.roleDescription(index).getText()).trim())
+                    expect((await careeersPage.roleDescriptionLbl(index).getText()).trim())
                                   .toBe(item.roleDesc.trim());
                 });
         
                 
                 it('Should display View Details plus sign button', async () => {
-                    expect(await careeersPage.viewDetailsPlusSignButton(index).isDisplayed()).toBe(true);
+                    expect(await careeersPage.viewDetailsPlusSignBtn(index).isDisplayed()).toBe(true);
                 });
         
                 
@@ -134,22 +134,24 @@ describe('See open positions in Sales Champ and Apply', () => {
    });
 
 
-   describe('Apply for a Role', () => {
+   fdescribe('Apply for a Role', () => {
         //Retrieve applicant test data
         const roleName = applyRoleData[0].applicantRole.trim(); //The role the applicant is interested in
         let index = 1; //Card index role in the front end, default = 0
 
-        beforeAll(async() => {
+        beforeAll( async () => {
             //Setup
             await careeersPage.careersLink().click(); //Navigate to Careers Page
             browser.sleep(2000); //TODO: Add wait for scroll instead of sleep
 
             //TODO: Add a function to get index of the roleName
             //Get index card role equal to the role name.
-            // console.log("Role Desc: " + roleData[index].roleDesc);
+            index = await careeersPage.getIndexForARole(roleName);
+
+            console.log("Card index for the role is : " + index);
         });
 
-        afterAll(async() => {
+        afterAll( async () => {
             //Teardown
             const EC = protractor.ExpectedConditions;
             await careeersPage.headerLogo().click();
@@ -159,7 +161,7 @@ describe('See open positions in Sales Champ and Apply', () => {
 
         it('Should display correct Role Name: ' + roleName, async () => {
             //Act
-            const element = careeersPage.roleName(index);
+            const element = careeersPage.roleNameLbl(index);
             await scrollToElement(element); //TODO: Add wait for scroll instead of sleep
             browser.sleep(100);
 
@@ -169,7 +171,7 @@ describe('See open positions in Sales Champ and Apply', () => {
         
         
         it('Should display correct Role Description: '  + roleName, async () => {
-            expect((await careeersPage.roleDescription(index).getText()).trim())
+            expect((await careeersPage.roleDescriptionLbl(index).getText()).trim())
                           .toBe(roleData[index].roleDesc.trim());
         });
 
@@ -206,7 +208,6 @@ describe('See open positions in Sales Champ and Apply', () => {
 
             //Teardown
             await alertBox.accept(); //Click Ok
-            browser.switchTo().defaultContent();//Switch to default
         });
 
 

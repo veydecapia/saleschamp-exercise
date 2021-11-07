@@ -1,4 +1,4 @@
-import { browser, by, element } from "protractor";
+import { browser, by, element, ElementArrayFinder, ElementFinder } from "protractor";
 import { BasePage } from "./base.page";
 
 
@@ -33,20 +33,19 @@ export class CareersPage extends BasePage {
         return element.all(by.css("#open-positions .div-block.sc-card.roles")).get(index);
     }
 
-    //TODO: Add Lbl for labels
-    roleName(
+    roleNameLbl(
         index: number
     ){
         return this.cardRole(index).element(by.css(".heading-5"));
     }
 
-    roleDescription(
+    roleDescriptionLbl(
         index: number
     ){
         return this.cardRole(index).element(by.css(".paragraph-bigger-2"));
     }
 
-    viewDetailsPlusSignButton(
+    viewDetailsPlusSignBtn(
         index: number
     ){
         return this.cardRole(index).element(by.css(".button.career-card strong"));
@@ -102,7 +101,6 @@ export class CareersPage extends BasePage {
     ): Promise<void> => {
         const data = jsonData[index];
 
-        //! To create utils for sendKeys or not to create
         await this.nameTxtbox().clear();
         await this.nameTxtbox().sendKeys(data.applicantName);
         
@@ -121,4 +119,27 @@ export class CareersPage extends BasePage {
         await this.submitBtn().click();
     }
 
+
+    // Careers Page Methods & Utilities
+
+    getIndexForARole = async (
+        roleName: string
+    ): Promise<number> => {
+        const el =  element.all(by.css("#open-positions .div-block.sc-card.roles"));
+        const count = await el.count()
+        let index = 0;
+        console.log("Number of Cards Present: " + count);
+
+        //Loop through all displayed cards
+        for(let i = 0; i < count; i++){
+            if(await this.roleNameLbl(i).getText() === roleName){
+                index = i;
+                break;
+            }
+        }
+        
+        return index;
+    }
+
+    
 }
