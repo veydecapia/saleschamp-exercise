@@ -31,43 +31,10 @@ export const scrollToElement = async (
     target: ElementFinder,
     timeout: number = DEFAULT_TIMEOUT
 ): Promise<void> => {
-    await waitToBeDisplayed(target, timeout);
+    // await waitToBeDisplayed(target, timeout);
     await browser.executeScript(
-        "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });",
+        "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });",
         target
-    );
-}
-
-
-export const waitToBeDisplayed = (
-    target: ElementFinder,
-    timeout: number = DEFAULT_TIMEOUT
-): webdriver.promise.Promise<boolean> => {
-    let e: ElementFinder = getElementFinder(target);
-
-    return browser.wait(
-        (): webdriver.promise.Promise<boolean> => {
-            e = getElementFinder(target);
-            // log()
-
-            return e
-                .isPresent()
-                .then(
-                    (value: boolean) => {
-                        if(!value) {
-                            return false;
-                        }
-                        return e.isDisplayed();
-                    },
-                    () => false
-                )
-                .then(
-                    (value: boolean) => value,
-                    () => false
-                );
-        },
-        timeout,
-        "Element ${e.locator()} is not present nor displayed"
     );
 }
 
@@ -80,9 +47,3 @@ export const getElementFinder = (
     }
     return element(target as Locator);
 }
-
-
-// export const urlChanged = async (): Promise<boolean> => {
-//     let url = await browser.getCurrentUrl();
-//     return url === "https://www.saleschamp.nl/";
-// }

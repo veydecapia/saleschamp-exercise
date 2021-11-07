@@ -1,4 +1,4 @@
-import { by, element } from "protractor";
+import { browser, by, element } from "protractor";
 import { BasePage } from "./base.page";
 
 
@@ -33,6 +33,7 @@ export class CareersPage extends BasePage {
         return element.all(by.css("#open-positions .div-block.sc-card.roles")).get(index);
     }
 
+    //TODO: Add Lbl for labels
     roleName(
         index: number
     ){
@@ -54,9 +55,70 @@ export class CareersPage extends BasePage {
     cardRoleApplyNowBtn(
         index: number
     ){
-        return this.cardRole(index).element(by.cssContainingText(".button", "apply now"));
+        return this.cardRole (index).element(by.cssContainingText(".button", "apply now"));
     }
 
 
+    // Careers Form
+
+    careersFormSection(){
+        return element(by.id("wf-form-Careers-Form"));
+    }
+
+    applyForARoleLbl(){
+        return this.careersFormSection().element(by.cssContainingText(".heading-10","Apply for a role"));
+    }
+
+    fillOutInstructionsLbl(){
+        return this.careersFormSection().element(by.css(".paragraph"));
+    }
+
+    nameTxtbox(){
+        return this.careersFormSection().element(by.id("Name---Careers"));
+    }
+
+    emailAddressTxtbox(){
+        return this.careersFormSection().element(by.id("Email---Careers"));
+    }
+
+    messageTxtArea(){
+        return this.careersFormSection().element(by.id("Careers-Message"));
+    }
+
+    submitBtn(){
+        return this.careersFormSection().element(by.css("input.button"));
+    }
+
+    formDoneBlock(){
+        return element(by.css(".w-form-done div"));
+    }
+
+
+    //Careers Page Actions
+
+    applyForARoleAction = async (
+        jsonData: Object, 
+        index: number = 0 //Default to first entry index=0
+    ): Promise<void> => {
+        const data = jsonData[index];
+
+        //! To create utils for sendKeys or not to create
+        await this.nameTxtbox().clear();
+        await this.nameTxtbox().sendKeys(data.applicantName);
+        
+        await this.emailAddressTxtbox().clear();
+        await this.emailAddressTxtbox().sendKeys(data.applicantEmailAddress);
+
+        await this.messageTxtArea().clear();
+        await this.messageTxtArea().sendKeys(data.applicantMessage);
+
+        /**
+         * As captcha cannot be automated.
+         * Need to request for developer to remove captcha functionality on a testing environment.
+         * When dealing with a Production environment, Captcha can temporarily be disabled.
+         */
+
+        await this.submitBtn().click();
+    }
 
 }

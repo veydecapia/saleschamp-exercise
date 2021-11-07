@@ -1,12 +1,14 @@
 import { CareersPage } from "../page-objects/careers.page";
 import { HomePage } from "../page-objects/home.page";
 import { browser } from "protractor";
-import { getElementAttributeValue, scrollToElement, waitElementToBeClickable, waitToBeDisplayed } from "../shared/utils";
+import { getElementAttributeValue, scrollToElement, waitElementToBeClickable } from "../shared/utils";
 import * as roleData from '../test-data/roleData.json';
+import * as applyRoleData from '../test-data/applyRoleData.json';
+import { protractor } from "protractor/built/ptor";
+import * as pageData from "../test-data/pageData.json";
 
 
-
-describe('See open positions in Sales Champ', () => {
+describe('See open positions in Sales Champ and Apply', () => {
    let homePage: HomePage;
    let careeersPage: CareersPage;
    careeersPage = new CareersPage();
@@ -18,14 +20,23 @@ describe('See open positions in Sales Champ', () => {
         homePage.navigateToHomePage();
    });
 
-   xdescribe('Go to Careers Page', () => {
+   describe('Go to Careers Page', () => {
         beforeAll(async() => {
-            //Navigate to Careers Page
-            await careeersPage.careersLink().click();
+            //Setup
+            await careeersPage.careersLink().click(); //Navigate to Careers Page
+            browser.sleep(1000); //TODO: Add wait for scroll instead of sleep
+        });
+
+        afterAll(async() => {
+            //Teardown
+            const EC = protractor.ExpectedConditions;
+            await careeersPage.headerLogo().click();
+
+            browser.wait(EC.titleIs(pageData.homePage.pageTitle));
         });
        
         it('Should have the correct page title', async () => {
-            expect(await browser.getTitle()).toEqual('Careers');
+            expect(await browser.getTitle()).toEqual(pageData.careersPage.pageTitle);
         });
 
         it('Should have the correct URL', async () => {
@@ -38,13 +49,12 @@ describe('See open positions in Sales Champ', () => {
 
         it('Should display correct Hero Title', async () => {
             expect(await careeersPage.heroTitle().getText())
-                        .toBe("You can make an impact on simplifying digital communication");
+                        .toBe(pageData.careersPage.heroTitle);
         });
 
         it('Should display correct Hero paragraph', async () => {
             expect((await careeersPage.heroParagraph().getText()).trim())
-                    //TODO: Add as a json file.
-                    .toBe("We're rapidly growing here at SalesChamp. We're hiring now and will continue to do so throughout 2021. We’re looking for passionate people to join our young, friendly team. ".trim());
+                    .toBe(pageData.careersPage.heroParagraph.trim());
         });
 
         it('Should display Apply Now Button', async () => {
@@ -60,8 +70,17 @@ describe('See open positions in Sales Champ', () => {
    describe('View Open Positions - Hot Roles', () => {
 
         beforeAll(async() => {
-            //Navigate to Careers Page
-            await careeersPage.careersLink().click();
+            //Setup
+            await careeersPage.careersLink().click(); //Navigate to Careers Page
+            browser.sleep(1000); //TODO: Add wait for scroll instead of sleep
+        });
+
+        afterAll(async() => {
+            //Teardown
+            const EC = protractor.ExpectedConditions;
+            await careeersPage.headerLogo().click();
+
+            browser.wait(EC.titleIs(pageData.homePage.pageTitle));
         });
        
         it('Should view open positions', async () => {
@@ -69,7 +88,7 @@ describe('See open positions in Sales Champ', () => {
 
             //Act
             await careeersPage.viewHotRolesBtn().click();
-            browser.sleep(1000); //TODO: Add wait for scroll
+            browser.sleep(2000); //TODO: Add wait for scroll instead of sleep
             waitElementToBeClickable(careeersPage.openPositionsSection());
 
             //Assert
@@ -80,12 +99,12 @@ describe('See open positions in Sales Champ', () => {
 
 
         // DATA DRIVEN TESTS
-        roleData.forEach((item , index) => {
+        roleData.forEach((item, index) => {
             describe("Get details for the role: " + item.roleName, () => {
                 it('Should display correct Role Name: ' + item.roleName, async () => {
                     //Act
                     const element = careeersPage.roleName(index);
-                    await scrollToElement(element); //TODO: Add wait for scroll
+                    await scrollToElement(element); //TODO: Add wait for scroll instead of sleep
                     browser.sleep(100);
         
                     //Assert
@@ -93,21 +112,101 @@ describe('See open positions in Sales Champ', () => {
                 });
                 
                 
-                it('Should display correct Role Description'  + item.roleName, async () => {
+                it('Should display correct Role Description: '  + item.roleName, async () => {
                     expect((await careeersPage.roleDescription(index).getText()).trim())
                                   .toBe(item.roleDesc.trim());
                 });
         
                 
-                it('Should display View Details plus sign button '  + item.roleName, async () => {
+                it('Should display View Details plus sign button', async () => {
                     expect(await careeersPage.viewDetailsPlusSignButton(index).isDisplayed()).toBe(true);
                 });
         
                 
-                it('Should display Apply Now button'  + item.roleName, async () => {
+                it('Should display Apply Now button', async () => {
                     expect(await careeersPage.cardRoleApplyNowBtn(index).isDisplayed()).toBe(true);
                 });
             });
+        });
+
+
+
+   });
+
+
+   describe('Apply for a Role', () => {
+        //Retrieve applicant test data
+        const roleName = applyRoleData[0].applicantRole.trim(); //The role the applicant is interested in
+        let index = 1; //Card index role in the front end, default = 0
+
+        beforeAll(async() => {
+            //Setup
+            await careeersPage.careersLink().click(); //Navigate to Careers Page
+            browser.sleep(2000); //TODO: Add wait for scroll instead of sleep
+
+            //TODO: Add a function to get index of the roleName
+            //Get index card role equal to the role name.
+            // console.log("Role Desc: " + roleData[index].roleDesc);
+        });
+
+        afterAll(async() => {
+            //Teardown
+            const EC = protractor.ExpectedConditions;
+            await careeersPage.headerLogo().click();
+
+            browser.wait(EC.titleIs(pageData.homePage.pageTitle));
+        });
+
+        it('Should display correct Role Name: ' + roleName, async () => {
+            //Act
+            const element = careeersPage.roleName(index);
+            await scrollToElement(element); //TODO: Add wait for scroll instead of sleep
+            browser.sleep(100);
+
+            //Assert
+            expect((await element.getText()).trim()).toBe(roleName.trim());
+        });
+        
+        
+        it('Should display correct Role Description: '  + roleName, async () => {
+            expect((await careeersPage.roleDescription(index).getText()).trim())
+                          .toBe(roleData[index].roleDesc.trim());
+        });
+
+        //TODO: Add it block verification to display correct details of the role
+        
+        it('Should hover to Careers form', async () => {
+            //Act
+            await careeersPage.cardRoleApplyNowBtn(index).click();
+            browser.sleep(1000); //TODO: Add wait for scroll instead of sleep
+
+            //Assert
+            expect(await careeersPage.careersFormSection().isDisplayed()).toBe(true);
+            expect(await careeersPage.applyForARoleLbl().isDisplayed()).toBe(true);
+            expect(await careeersPage.fillOutInstructionsLbl().isDisplayed()).toBe(true);
+        });
+
+
+         /**
+         * As captcha cannot be automated.
+         * Need to request for developer to remove captcha functionality on a testing environment.
+         * When dealing with a Production environment, Captcha can temporarily be disabled.
+         */
+        it('Should be able to Submit application', async () => {
+            //Act
+            await careeersPage.applyForARoleAction(applyRoleData);
+            
+            //Assert
+            // expect(await careeersPage.formDoneBlock().getText())
+            //         .toBe("Thank you! Your submission has been received!")
+
+            //Assert on alert text box instead
+            let alertBox = await browser.switchTo().alert();
+            expect(await alertBox.getText()).toBe("Please confirm you’re not a robot.");
+
+            //Teardown
+            await alertBox.accept(); //Click Ok
+            browser.switchTo().defaultContent();//Switch to default
         });
 
 
