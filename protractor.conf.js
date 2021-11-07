@@ -19,13 +19,13 @@ const reporter = new HtmlScreenshotReporter({
     reportTitle: 'SalesChamp_Report',
     timeStamp: true,
     fixedScreenshotName: true,
-    userCss: './reports/reportStyle.css',
+    userCss: '/reports/reportStyle.css',
     ignoreSkippedSpecs: true,
     reportFailedUrl: true,
     captureOnlyFailedSpecs: false,
     reportOnlyFailedSpecs: false
     // pathBuilder: function (currentSpec, suites, browserCapabilities) {
-    //     return browserCapabilities.get('browserName')  + '/' + timeStamp + '_' + currentSpec;
+    //     return browserCapabilities.get('browserName')  + '/' + timeStamp + '_' + currentSpec.;
     // }
 })
 
@@ -33,16 +33,20 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
     framework: 'jasmine2', //Type of Framework used 
     directConnect:true, 
-    specs: ['./specs/careers.spec.ts'], //Name of the Specfile
+    specs: [   //Name of the Specfile
+        // './specs/home.spec.ts',
+        './specs/careers.spec.ts'
+    ],
     multiCapabilities: [{
         browserName: 'chrome',   
         shardTestFiles: true, // Allows different specs to run in parallel
-        maxInstances: 1, // Sets max number of browser instances that can run in parallel for this set of capabilities.
+        maxInstances: 2, // Sets max number of browser instances that can run in parallel for this set of capabilities.
         'chromeOptions': {
             'args' : [
                 'start-maximized',
                 'disable-extensions',
                 'incognito',
+                'disable-gpu',
                 'disable-infobars',
                 'ignore-certificate-errors'
             ]
@@ -55,6 +59,7 @@ exports.config = {
     //     browserName: 'firefox'
     // }
     ],
+    noGlobals: false,
     beforeLaunch: function () {
         return new Promise( function (resolve) {
           reporter.beforeLaunch(resolve);

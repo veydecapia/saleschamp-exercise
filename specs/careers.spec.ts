@@ -134,7 +134,7 @@ describe('See open positions in Sales Champ and Apply', () => {
    });
 
 
-   fdescribe('Apply for a Role', () => {
+   describe('Apply for a Role', () => {
         //Retrieve applicant test data
         const roleName = applyRoleData[0].applicantRole.trim(); //The role the applicant is interested in
         let index = 1; //Card index role in the front end, default = 0
