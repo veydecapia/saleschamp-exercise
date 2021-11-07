@@ -31,8 +31,9 @@ export const scrollToElement = async (
     target: ElementFinder,
     timeout: number = DEFAULT_TIMEOUT
 ): Promise<void> => {
+    await waitToBeDisplayed(target, timeout);
     await browser.executeScript(
-        'arguments[0].scrollIntoView(false);',
+        "arguments[0].scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });",
         target
     );
 }
@@ -71,14 +72,6 @@ export const waitToBeDisplayed = (
 }
 
 
-
-// export const urlChanged = async (): Promise<boolean> => {
-//     let url = await browser.getCurrentUrl();
-//     return url === "https://www.saleschamp.nl/";
-// }
-
-
-
 export const getElementFinder = (
     target: ElementFinder,
 ): ElementFinder => {
@@ -87,3 +80,9 @@ export const getElementFinder = (
     }
     return element(target as Locator);
 }
+
+
+// export const urlChanged = async (): Promise<boolean> => {
+//     let url = await browser.getCurrentUrl();
+//     return url === "https://www.saleschamp.nl/";
+// }

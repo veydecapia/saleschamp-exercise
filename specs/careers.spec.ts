@@ -69,6 +69,7 @@ describe('See open positions in Sales Champ', () => {
 
             //Act
             await careeersPage.viewHotRolesBtn().click();
+            browser.sleep(1000); //TODO: Add wait for scroll
             waitElementToBeClickable(careeersPage.openPositionsSection());
 
             //Assert
@@ -76,33 +77,36 @@ describe('See open positions in Sales Champ', () => {
             expect(await careeersPage.openPositionsSection().isDisplayed()).toBe(true);
         });
 
-        // DATA DRIVEN TESTS
 
-        //TODO: Add describe for better report generation
+
+        // DATA DRIVEN TESTS
         roleData.forEach((item , index) => {
-            it('Should display correct Role Name: ' + item.roleName, async () => {
-                //Act
-                const element = careeersPage.roleName(index);
-                await scrollToElement(element); //TODO: Add wait for scroll
-    
-                //Assert
-                expect((await element.getText()).trim()).toBe(item.roleName.trim());
-            });
-            
-            
-            it('Should display correct Role Description', async () => {
-                expect((await careeersPage.roleDescription(index).getText()).trim())
-                              .toBe(item.roleDesc.trim());
-            });
-    
-            
-            it('Should display View Details plus sign button ', async () => {
-                expect(await careeersPage.viewDetailsPlusSignButton(index).isDisplayed()).toBe(true);
-            });
-    
-            
-            it('Should display Apply Now button', async () => {
-                expect(await careeersPage.cardRoleApplyNowBtn(index).isDisplayed()).toBe(true);
+            describe("Get details for the role: " + item.roleName, () => {
+                it('Should display correct Role Name: ' + item.roleName, async () => {
+                    //Act
+                    const element = careeersPage.roleName(index);
+                    await scrollToElement(element); //TODO: Add wait for scroll
+                    browser.sleep(100);
+        
+                    //Assert
+                    expect((await element.getText()).trim()).toBe(item.roleName.trim());
+                });
+                
+                
+                it('Should display correct Role Description'  + item.roleName, async () => {
+                    expect((await careeersPage.roleDescription(index).getText()).trim())
+                                  .toBe(item.roleDesc.trim());
+                });
+        
+                
+                it('Should display View Details plus sign button '  + item.roleName, async () => {
+                    expect(await careeersPage.viewDetailsPlusSignButton(index).isDisplayed()).toBe(true);
+                });
+        
+                
+                it('Should display Apply Now button'  + item.roleName, async () => {
+                    expect(await careeersPage.cardRoleApplyNowBtn(index).isDisplayed()).toBe(true);
+                });
             });
         });
 

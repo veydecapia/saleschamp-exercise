@@ -8,7 +8,7 @@ const timeStamp = today.getFullYear() + '-'
 
 const reporter = new HtmlScreenshotReporter({
     consolidateAll: true,
-    dest: 'reports/testResult',
+    dest: 'reports/TestResult',
     filename: 'SalesChampAutomationTestReport.html',
     filePrefix: 'index -' + timeStamp,
     showSummary: true,
@@ -19,9 +19,14 @@ const reporter = new HtmlScreenshotReporter({
     reportTitle: 'SalesChamp_Report',
     timeStamp: true,
     fixedScreenshotName: true,
-    pathBuilder: function (currentSpec, suites) {
-        return currentSpec.fullName;
-    }
+    userCss: './reports/reportStyle.css',
+    ignoreSkippedSpecs: true,
+    reportFailedUrl: true,
+    captureOnlyFailedSpecs: false,
+    reportOnlyFailedSpecs: false
+    // pathBuilder: function (currentSpec, suites, browserCapabilities) {
+    //     return browserCapabilities.get('browserName')  + '/' + timeStamp + '_' + currentSpec;
+    // }
 })
 
 const { SpecReporter } = require('jasmine-spec-reporter');
