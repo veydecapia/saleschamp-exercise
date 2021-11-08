@@ -1,0 +1,14 @@
+[
+    {
+        "roleName": "Senior QA Automation Engineer",
+        "roleDesc": "We're looking for an experienced candidate who is strong in end-to-end testing automation. Using your analytical thinking, you'll take ownership and work with engineers to determine root causes why tests break and help them fix test cases."
+    },
+    {
+        "roleName": "Senior Backend Developer with Node.js & PHP",
+        "roleDesc": "We're looking for a strong candidate experienced in Node.js and PHP to help us build cool new features within our current web application and to help us create a whole new product of our company. You'll be working \"side by side\" with our international development team bringing up ideas and solutions for some of the current challenges we're facing."
+    },
+    {
+        "roleName": "Senior Frontend Developer",
+        "roleDesc": "SalesChamp is rapidly growing. We're looking for a strong candidate who has at least two years experience in the development of single-page applications. You are a person who follows best practices in terms of architecture and maintainability. You want to develop new UI features that take the user experience to that next level."
+    }
+]
