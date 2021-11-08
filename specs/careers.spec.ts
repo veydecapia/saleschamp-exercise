@@ -1,7 +1,7 @@
 import { CareersPage } from "../page-objects/careers.page";
 import { HomePage } from "../page-objects/home.page";
 import { browser } from "protractor";
-import { getElementAttributeValue, scrollToElement, waitElementToBeClickable } from "../shared/utils";
+import { getElementAttributeValue, isVisibleInViewPort, isNotObstructed, scrollToElement, waitElementToBeClickable } from "../shared/utils";
 import { protractor } from "protractor/built/ptor";
 import * as roleData from '../test-data/roleData.json';
 import * as applyRoleData from '../test-data/applyRoleData.json';
@@ -24,7 +24,6 @@ describe('See open positions in Sales Champ and Apply', () => {
         beforeAll(async() => {
             //Setup
             await careeersPage.careersLink().click(); //Navigate to Careers Page
-            browser.sleep(1000); //TODO: Add wait for scroll instead of sleep
         });
 
         afterAll(async() => {
@@ -72,7 +71,6 @@ describe('See open positions in Sales Champ and Apply', () => {
         beforeAll(async() => {
             //Setup
             await careeersPage.careersLink().click(); //Navigate to Careers Page
-            browser.sleep(1000); //TODO: Add wait for scroll instead of sleep
         });
 
         afterAll(async() => {
@@ -88,8 +86,7 @@ describe('See open positions in Sales Champ and Apply', () => {
 
             //Act
             await careeersPage.viewHotRolesBtn().click();
-            browser.sleep(2000); //TODO: Add wait for scroll instead of sleep
-            waitElementToBeClickable(careeersPage.openPositionsSection());
+            await isVisibleInViewPort(careeersPage.openPositionsSection());
 
             //Assert
             expect(await browser.getCurrentUrl()).toContain('#open-positions');
@@ -104,8 +101,7 @@ describe('See open positions in Sales Champ and Apply', () => {
                 it('Should display correct Role Name: ' + item.roleName, async () => {
                     //Act
                     const element = careeersPage.roleNameLbl(index);
-                    await scrollToElement(element); //TODO: Add wait for scroll instead of sleep
-                    browser.sleep(100);
+                    await scrollToElement(element);
         
                     //Assert
                     expect((await element.getText()).trim()).toBe(item.roleName.trim());
@@ -137,17 +133,14 @@ describe('See open positions in Sales Champ and Apply', () => {
    describe('Apply for a Role', () => {
         //Retrieve applicant test data
         const roleName = applyRoleData[0].applicantRole.trim(); //The role the applicant is interested in
-        let index = 1; //Card index role in the front end, default = 0
+        let index = 0; //Card index role in the front end, default = 0
 
         beforeAll( async () => {
             //Setup
             await careeersPage.careersLink().click(); //Navigate to Careers Page
-            browser.sleep(2000); //TODO: Add wait for scroll instead of sleep
 
-            //TODO: Add a function to get index of the roleName
             //Get index card role equal to the role name.
             index = await careeersPage.getIndexForARole(roleName);
-
             console.log("Card index for the role is : " + index);
         });
 
@@ -162,8 +155,7 @@ describe('See open positions in Sales Champ and Apply', () => {
         it('Should display correct Role Name: ' + roleName, async () => {
             //Act
             const element = careeersPage.roleNameLbl(index);
-            await scrollToElement(element); //TODO: Add wait for scroll instead of sleep
-            browser.sleep(100);
+            await scrollToElement(element);
 
             //Assert
             expect((await element.getText()).trim()).toBe(roleName.trim());
@@ -180,7 +172,7 @@ describe('See open positions in Sales Champ and Apply', () => {
         it('Should hover to Careers form', async () => {
             //Act
             await careeersPage.cardRoleApplyNowBtn(index).click();
-            browser.sleep(1000); //TODO: Add wait for scroll instead of sleep
+            await isVisibleInViewPort(careeersPage.careersFormSection());
 
             //Assert
             expect(await careeersPage.careersFormSection().isDisplayed()).toBe(true);
