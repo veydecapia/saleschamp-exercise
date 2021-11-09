@@ -1,4 +1,5 @@
 import { browser, by, element, ElementArrayFinder, ElementFinder } from "protractor";
+import { click, scrollToElement, waitElementToBeClickable } from "../shared/utils";
 import { BasePage } from "./base.page";
 
 
@@ -101,6 +102,7 @@ export class CareersPage extends BasePage {
     ): Promise<void> => {
         const data = jsonData[index];
 
+        await scrollToElement(this.nameTxtbox());
         await this.nameTxtbox().clear();
         await this.nameTxtbox().sendKeys(data.applicantName);
         
@@ -116,7 +118,8 @@ export class CareersPage extends BasePage {
          * When dealing with a Production environment, Captcha can temporarily be disabled.
          */
 
-        await this.submitBtn().click();
+        await scrollToElement(this.submitBtn());
+        await click(this.submitBtn());
     }
 
 

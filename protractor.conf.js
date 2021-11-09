@@ -1,7 +1,8 @@
 const HtmlReporter = require('protractor-beautiful-reporter');
 const reporter = new HtmlReporter({
     baseDirectory: 'reports/testResults',
-    // baseDirectory: 'tmp/screenshots',
+    preserveDirectory: true,
+    cleanDestination: true,
     screenshotsSubfolder: 'images',
     excludeSkippedSpecs: true,
     takeScreenShotsOnlyForFailedSpecs: false,

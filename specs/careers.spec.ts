@@ -6,6 +6,7 @@ import { protractor } from "protractor/built/ptor";
 import * as roleData from '../test-data/roleData.json';
 import * as applyRoleData from '../test-data/applyRoleData.json';
 import * as pageData from "../test-data/pageData.json";
+import { DEFAULT_TIMEOUT } from "../shared/config";
 
 
 describe('See open positions in Sales Champ and Apply', () => {
@@ -193,6 +194,10 @@ describe('See open positions in Sales Champ and Apply', () => {
             //Assert
             // expect(await careeersPage.formDoneBlock().getText())
             //         .toBe("Thank you! Your submission has been received!")
+
+            //Wait for an alert text box
+            const EC = protractor.ExpectedConditions;
+            await browser.wait(EC.alertIsPresent(), DEFAULT_TIMEOUT);
 
             //Assert on alert text box instead
             let alertBox = await browser.switchTo().alert();
