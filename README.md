@@ -32,7 +32,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Project contains Automated Test written in TypeScript/JavaScript using [Protractor](https://www.protractortest.org/#/infrastructure) as an open source automation testing framework. Also, comes with [Jasmine](https://jasmine.github.io/) that follows BDD framework, and Jasmine spec reporter and html screenshot reporter for generating real time report and html reports.
+Project contains Automated Test written in TypeScript/JavaScript using [Protractor](https://www.protractortest.org/#/infrastructure) as an open source automation testing framework. Also, comes with [Jasmine](https://jasmine.github.io/) that follows BDD framework, and Jasmine spec reporter, protractor beautiful reporter for real time generation of reports and html reports.
 
 My task is to automate testing of [www.saleschamp.nl](https://www.saleschamp.nl/), in the careers page.
 The automated test covers the following test scenarios
@@ -108,25 +108,40 @@ This will run the automated test that covers both the following scenarios: <br/>
 * A candidate would like to see open positions in SalesChamp.
 * A candidate would like to apply for the Backend role advertised on the SalesChamp site. 
 
-<br/><br/>
+<br/>
 
-2. While the test is running, the Jasmine Spec reporter will send updates of the test pass fail status on the command line in real time.<br/>
+2. While the test is running, the Jasmine Spec reporter will send updates of the test pass fail status on the command line in real time.<br/> 
 
 ![JasmineSpecReporter](https://user-images.githubusercontent.com/6094567/140670121-3414f338-d73c-4583-bbca-dde3c6f52fbf.png)<br/><br/>
 
-3. After the browser is closed, you can look for the text **Executed 24 of 24 specs**, and you know that the run is already completed.
-```Executed 24 of 24 specs SUCCESS in 17 secs.
-[09:16:20] I/launcher - 0 instance(s) of WebDriver still running
-[09:16:20] I/launcher - chrome #01 passed
+To demonstrate parallel test, maxInstances is set to 2. Two instances of chrome will be instantiated and both **home.spec.ts** and **careers.spec.ts** will run at the same time.
+![image](https://user-images.githubusercontent.com/6094567/140841913-1c67b14c-50b1-476b-8507-bbdc5f10b59f.png)
+
+
+3. After the browser is closed, you can look for the text **0 instance(s) of WebDriver still running**, and you know that the run is already completed.
+```
+[08:46:20] I/testLogger -
+
+[08:46:20] I/launcher - 0 instance(s) of WebDriver still running
+[08:46:20] I/launcher - chrome #01-0 passed
+[08:46:20] I/launcher - chrome #01-1 passed
 ```
 <br/><br/>
-4. After the test, go to **reports\TestResult** folder.<br/>
-  You should see a HTML Test Report, *SalesChampAutomationTestReport.html*. Open and see the summary result.<br/><br/>
-  Each of the test cases which is represented by a link, *(e.g.Should have the correct page title)* provides you a screenshot.<br/>
+4. After the test, go to **reports\testResults** folder.<br/>
+  You should see a HTML Test Report, *SalesChampAutomationReport.html*. Open and see the summary result.<br/><br/>
   
-  ![COyImxoNJT](https://user-images.githubusercontent.com/6094567/140670617-621376ac-1f33-4e43-b1ae-cc791cd3e9b6.png)
+  ![image](https://user-images.githubusercontent.com/6094567/140842067-efad346a-048e-4bf9-afa5-bfcfffef5851.png)
+  
+  You can view the screenshot for each of the test cases available. *(e.g.Should have the correct page title)* provides you a screenshot.<br/>
 
-  ![image](https://user-images.githubusercontent.com/6094567/140670750-732d9607-1a09-4799-903d-a742cd700fd3.png)
+  ![image](https://user-images.githubusercontent.com/6094567/140842175-a3a0cd2b-5278-409e-9d33-671a7c9b663f.png)
+  
+  ![image](https://user-images.githubusercontent.com/6094567/140842128-d2de1ab2-02b7-4a0b-9ece-76496dacc524.png)
+  
+
+
+  Sample generated report for reference: [reports.zip](https://github.com/veydecapia/saleschamp-exercise/files/7501112/reports.zip)
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
