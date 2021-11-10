@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "protractortest": "./node_modules/.bin/protractor protractor.conf.js",
+    "protractortest": "./node_modules/.bin/protractor conf/protractor.conf.js",
     "protractorsetup": "npm install && node ./node_modules/protractor/bin/webdriver-manager update",
     "test": "npm run single && npm run local && npm run parallel",
     "single": "./node_modules/.bin/protractor conf/single.conf.js",

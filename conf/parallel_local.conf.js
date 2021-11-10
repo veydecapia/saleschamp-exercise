@@ -1,7 +1,7 @@
 var browserstack = require('browserstack-local');
 
 exports.config = {
-  'specs': [ '../specs/local.js' ],
+  'specs': [ '../specs/home.spec.ts' ],
   'browserstackUser': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
   'browserstackKey': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
 

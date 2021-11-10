@@ -44,7 +44,7 @@ exports.config = {
        jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: 'pretty' }}));
        jasmine.getEnv().addReporter(reporter.getJasmine2Reporter());
        require('ts-node').register({
-        project: require('path').join(__dirname, './tsconfig.json') // Relative path of tsconfig.json file 
+        project: require('path').join(__dirname, '../tsconfig.json') // Relative path of tsconfig.json file 
       });
       
     },

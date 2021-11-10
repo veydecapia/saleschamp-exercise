@@ -1,5 +1,6 @@
 exports.config = {
-  'specs': [ '../specs/home.spec.ts' ],
+  'framework': 'jasmine2',
+  'specs': [ '../specs/careers.spec.ts' ],
   'browserstackUser': 'harveydecapia_rQ5fzk',
   'browserstackKey': 'J4wx38FAQFoewn2c1YWJ',
   'commonCapabilities': {
@@ -19,11 +20,18 @@ exports.config = {
     "os": "Windows",
     "os_version": "10"
   },{
-    "browser": "safari",
-    "browser_version": "14.1",
-    "os": "OS X",
-    "os_version": "Big Sur"
+    "browser": "Safari",
+    "browser_version": "14.0",
+    "os" : "OS X",
+    "os_Version" : "Big Sur",
   }],
+  onPrepare() {
+    //global test set-up goes here
+   require('ts-node').register({
+     project: require('path').join(__dirname, '../tsconfig.json') // Relative path of tsconfig.json file 
+   });
+  },
+
   // Code to mark the status of test on BrowserStack based on test assertions
   onComplete: function (passed) {
     if (!passed) {

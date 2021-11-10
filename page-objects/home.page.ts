@@ -19,6 +19,7 @@ export class HomePage extends BasePage {
     //Home Page Actions
 
     navigateToHomePage = async(): Promise<void> =>{
+        await browser.manage().window().maximize();
         await browser.get(env.PROD.URL);
 
         let EC = protractor.ExpectedConditions;
