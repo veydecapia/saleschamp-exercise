@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/jasmine": "^3.10.2",
     "@types/node": "^16.11.6",
+    "browserstack-local": "^1.4.8",
     "jasmine": "^3.10.0",
     "jasmine-spec-reporter": "^7.0.0",
     "protractor": "^7.0.0",
@@ -15,8 +16,17 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "./node_modules/.bin/protractor protractor.conf.js",
-    "setup": "npm install && node ./node_modules/protractor/bin/webdriver-manager update"
+    "protractortest": "./node_modules/.bin/protractor ./conf/protractor.conf.js",
+    "protractorsetup": "npm install && node ./node_modules/protractor/bin/webdriver-manager update",
+    "test": "npm run single && npm run local && npm run parallel",
+    "single": "./node_modules/.bin/protractor conf/single.conf.js",
+    "local": "./node_modules/.bin/protractor conf/local.conf.js",
+    "parallel": "./node_modules/.bin/protractor conf/parallel.conf.js",
+    "parallel_local": "./node_modules/.bin/protractor conf/parallel_local.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veydecapia/saleschamp-exercise"
   },
   "author": "Harvey Decapia",
   "license": "ISC"
