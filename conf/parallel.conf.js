@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 exports.config = {
   'framework': 'jasmine2',
   'specs': [ '../specs/careers.spec.ts' ],
-  'browserstackUser': 'harveydecapia_rQ5fzk',
-  'browserstackKey': 'J4wx38FAQFoewn2c1YWJ',
+  'browserstackUser': process.env.BROWSERSTACK_USERNAME,
+  'browserstackKey': process.env.BROWSERSTACK_ACCESS_KEY,
   'commonCapabilities': {
     'build': 'browserstack-build-1',
     'name': 'parallel_test',

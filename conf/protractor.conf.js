@@ -19,15 +19,22 @@ exports.config = {
     framework: 'jasmine2', //Type of Framework used 
     directConnect:true, 
     specs: [   //Name of the Specfile
-        './specs/home.spec.ts',
-        './specs/careers.spec.ts'
+        './specs/home.spec.ts'
+        // './specs/careers.spec.ts'
     ],
     multiCapabilities: [{
         browserName: "chrome",
         shardTestFiles: true, // Allows different specs to run in parallel
         maxInstances: 2, // Sets max number of browser instances that can run in parallel for this set of capabilities.
-        chromeOptions: {
-          args: ['--no-sandbox', "--headless", "--disable-gpu", "--window-size=1920,1080" ]
+        'chromeOptions': {
+            'args' : [
+                'start-maximized',
+                'disable-extensions',
+                'incognito',
+                'disable-gpu',
+                'disable-infobars',
+                'ignore-certificate-errors'
+            ]
         }
     }],
     // noGlobals: false,
